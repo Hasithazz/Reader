@@ -203,9 +203,63 @@ class AdminController extends CI_Controller {
             $this->load->view('adminViews\AdminPanelView', $error);
         }
     }
-    
+
     public function loadSearchView() {
         $this->load->view('adminViews\adminNavViews\searchBookView');
+    }
+
+    public function searchBook() {
+
+        $searchType = $this->setSearchRules();
+
+        if ($this->form_validation->run() == TRUE) {
+
+            $data['books'] = $this->getBookData($searchType);
+            
+            $subView = $this->load->view('adminViews\adminNavViews\SearchBookView', $data, TRUE);
+            $this->load->view('adminViews\AdminPanelView', array('subView' => $subView));
+        } else {
+
+            $subView = $this->load->view('adminViews\adminNavViews\SearchBookView', '', TRUE);
+            $this->load->view('adminViews\AdminPanelView', array('subView' => $subView));
+        }
+    }
+
+    function setSearchRules() {
+
+        $searchType = 0;
+
+        if ($this->input->post('titleCheck') == 'check' && $this->input->post('authorCheck') == 'check') {
+
+            $this->form_validation->set_rules('searchTitle', 'Title', 'required');
+            $this->form_validation->set_rules('searchAuthor', 'Author', 'required');
+            $searchType = 1;
+        } elseif ($this->input->post('titleCheck') == 'check') {
+
+            $this->form_validation->set_rules('searchTitle', 'Title', 'required');
+            $searchType = 2;
+        } elseif ($this->input->post('authorCheck') == 'check') {
+
+            $this->form_validation->set_rules('searchAuthor', 'Author', 'required');
+            $searchType = 3;
+        } else {
+            $this->form_validation->set_rules('titleCheck', '', 'required');
+            $this->form_validation->set_rules('authorCheck', '', 'required');
+        }
+        return $searchType;
+    }
+
+    public function getBookData($searchType) {
+        switch ($searchType) {
+            case 1:
+                return $this->BookModel->searchBook($this->input->post('searchTitle'), $this->input->post('searchAuthor'));
+            case 2:
+                return $this->BookModel->searchBook($this->input->post('searchTitle'), NULL);
+            case 3:
+                return $this->BookModel->searchBook(NULL, $this->input->post('searchAuthor'));
+            default:
+                break;
+        }
     }
 
 }

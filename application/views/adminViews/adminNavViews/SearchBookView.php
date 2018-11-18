@@ -16,18 +16,20 @@
                 </div>
                 <div class="col-auto my-1">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="titleCheck" name="titleCheck">
+                        <input class="form-check-input" type="checkbox" id="titleCheck" value="check" name="titleCheck">
                         <label class="form-check-label" for="titleCheck">
                             By Title
                         </label>
+                        <?php echo form_error('titleCheck', '<div class="adminFormErrorMsg">', '</div>'); ?>
                     </div>
                 </div>
                 <div class="col-auto my-1">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="authorCheck" name="authorCheck">
+                        <input class="form-check-input" type="checkbox" id="authorCheck" value="check" name="authorCheck">
                         <label class="form-check-label" for="authorCheck">
                             By Author
                         </label>
+                        <?php echo form_error('authorCheck', '<div class="adminFormErrorMsg">', '</div>'); ?>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary my-1">Search &nbsp;<i class="fa fa-search" aria-hidden="true"></i></button>
@@ -37,7 +39,39 @@
     </div>
     <div class="row col-md-12">
         <div class="container">
-            <h2>Content Area</h2>
+            <div class="container row col-md-12">
+                <?php               
+                if (isset($books)) {
+                    echo '<div class="container row col-md-12">'
+                    . '<h2>Search Result</h2>'
+                    . '</div>'
+                    . '<div class="container row col-md-12">';
+                    foreach ($books as $value) {
+                        echo
+                        '<div class="card-deck">
+                            <div class="card">
+                                <img class="allBooks img" src="' . base_url() . 'assets/images/' . $value->ImageUrl . '" alt="' . base_url() . 'assets/images/wonder.jpg">
+                                <div class="card-body">
+                                    <div class="allbooks title">
+                                        <h6class="card-title ">' . $value->Title . '</h5>
+                                    </div>
+                                    <div class="allbooks author">
+                                    <p class="card-text"> Author : ' . $value->AuthorName . '</p>
+                                    </div>                       
+                                    <p class="card-text"> Year of published : ' . $value->YearOfPublished . '</p>                            
+                                </div>
+                            </div>
+                        </div>';
+                    }
+                    echo '</div>';
+                } else {
+                    echo '<div class="container row col-md-12">'
+                    . '<h2>Search Result</h2>'
+                    . '<h4>No Result found</h4>'
+                    . '</div>';
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>
