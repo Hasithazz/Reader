@@ -65,10 +65,7 @@
                     }
                     echo '</div>';
                 } else {
-                    echo '<div class="container row col-md-12">'
-                    . '<h2>Search Result</h2>'
-                    . '<h4>No Result found</h4>'
-                    . '</div>';
+                    
                 }
                 ?>
             </div>
