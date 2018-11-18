@@ -1,0 +1,28 @@
+.cart-row{
+    padding-top: 20px;   
+    margin-bottom: 10px;
+    border: solid;
+    border-color: #969696;
+    border-radius: 13px;
+}
+.cart-img{
+    position: relative;
+    width: 100px;
+    height: 150px;
+    margin: 5px 5px 5px 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.cart-title{
+    margin-left: 100px;
+    position: relative;
+    bottom: 154px;
+    left: 50px;
+    font-size: larger;
+    font-weight: 700;
+}
+.cart-remove-btn{
+    position: relative;
+    bottom: 58px;
+    left: 92%;
+
+}

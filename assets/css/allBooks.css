@@ -1,0 +1,28 @@
+
+.allBooks.img {
+    position: relative;
+    float: left;
+    width:  250px;
+    height: 350px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0px auto;
+    display: block;
+    padding: 5px 5px 0px 5px;
+
+}
+.allBooks.title{
+    margin: auto;
+    text-align: center;
+    display: inline-block;
+    max-width: 250px;
+    padding: 10px;
+    word-break: break-all; /* optional */
+
+}
+.allBooks.content{
+    padding-right: 20px;
+}
+.allBooks.author{}
+
