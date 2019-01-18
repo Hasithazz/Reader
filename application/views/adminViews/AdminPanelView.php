@@ -26,7 +26,7 @@
 
         <button type="button" class="btn btn-danger admin logout_btn"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Log Out</button>
     </div>
-    <div id="admin_panel" class="col-md-10 admin_panel">
+    <div id="admin_panel" class="col-md-10 row admin_panel">
         <?php if (isset($subView)) {
             echo $subView;
         }?>

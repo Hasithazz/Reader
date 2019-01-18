@@ -13,18 +13,20 @@ admin.login_form.error{
 }
 .admin.nav_item{
     background-color: #d85900;
-    width: 256px;
+    width: 231px;
     margin-bottom: 3px;
 }
 .admin.logout_btn{
     position: relative;
-    top: 585px;
+    top: 500px;
     left: -19px;
-    width: 265px;
+    width: 240px;
 }
 .admin_panel{
     margin-top: 15px;
-    height: 97%;
+    /* height: 97%; */
+    left: 267px;
+    overflow-x: hidden;
 }
 .add_author_card{
     position: relative;
@@ -172,9 +174,10 @@ body, html {
 }
 .admin_navbar{
     background-color: #494545;
-    height: 100%;
     padding-left: 25px;
     padding-top: 40px;
+    height: 100%;
+    position: fixed;
 }
 .admin_link{
     color: white;

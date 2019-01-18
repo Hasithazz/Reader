@@ -21,3 +21,13 @@
 .book-card{
     padding-top: 30px;
 }
+.homePage.carousel{
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto
+}
+.book.image{
+    margin: initial;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}

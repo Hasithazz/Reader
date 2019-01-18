@@ -19,13 +19,11 @@ class HomeController extends CI_Controller {
 
     public function index() {
 
-        echo $this->session->uid;
-
         $this->configurePagination();
         $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
         $data['mostPopulerBooks'] = $this->BookModel->getMostPopularBooks();
-        $data['allBooks'] = $this->BookModel->getAllBooks(8, $page);
+        $data['allBooks'] = $this->BookModel->getAllBooks(10, $page);
         $data['links'] = $this->pagination->create_links();
 
 
@@ -41,7 +39,7 @@ class HomeController extends CI_Controller {
         $config = array();
         $config['base_url'] = base_url('HomeController/index');
         $config['total_rows'] = $this->BookModel->countAllBooks();
-        $config['per_page'] = 8;
+        $config['per_page'] = 10;
         $this->pagination->initialize($config);
     }
 

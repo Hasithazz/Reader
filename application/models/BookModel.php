@@ -77,7 +77,8 @@ class BookModel extends CI_Model {
         $this->db->join('user', 'user_book.uid = user.uid');
         $where = 'user_book.uid !="'.$uid.'" AND user_book.SerialKey !='.$serialKey;
         $this->db->where($where);
-        $this->db->group_by('user_book.SerialKey,user_book.uid');
+        $this->db->group_by(array('books.SerialKey','user_book.uid'));
+       
         $this->db->order_by('Views', 'DESC');
         $this->db->limit(5);
         $query =$this->db->get();
