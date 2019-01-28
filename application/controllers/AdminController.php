@@ -11,9 +11,11 @@
  *
  * @author hsedi
  */
-class AdminController extends CI_Controller {
+class AdminController extends CI_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('BookModel');
         $this->load->model('CategoryModel');
@@ -24,17 +26,20 @@ class AdminController extends CI_Controller {
         $this->load->view('HeaderView');
     }
 
-    public function index() {
+    public function index()
+    {
 
         $this->loadLoginPage();
     }
 
-    public function loadLoginPage() {
+    public function loadLoginPage()
+    {
 
         $this->load->view('adminViews\AdminLoginView');
     }
 
-    public function validateLogin() {
+    public function validateLogin()
+    {
 
         if ($this->AdminModel->findAdmin($this->input->post('userName'))) {
             if ($this->AdminModel->getAdmin($this->input->post('userName'))->Password == $this->input->post('userPassword')) {
@@ -50,17 +55,29 @@ class AdminController extends CI_Controller {
         }
     }
 
-    public function loadAdminPanel() {
+    public function loadAdminPanel()
+    {
 
         $this->load->view('adminViews\AdminPanelView');
     }
 
-    public function loadAddView() {
+    public function loadAddView()
+    {
 
         $this->load->view('adminViews\adminNavViews\AddView', $this->loadDataToAddView());
     }
 
-    public function addCategory() {
+    public function loadDataToAddView()
+    {
+
+        $data['authors'] = $this->AuthorModel->getAllAuthors();
+        $data['categories'] = $this->CategoryModel->getAllCategories();
+
+        return $data;
+    }
+
+    public function addCategory()
+    {
 
         $this->form_validation->set_rules('category', 'Category', 'required|callback_validateCategory');
 
@@ -81,7 +98,8 @@ class AdminController extends CI_Controller {
         }
     }
 
-    public function addAuthor() {
+    public function addAuthor()
+    {
         $this->form_validation->set_rules('author', 'Author', 'required|callback_validateAuthor');
 
         if ($this->form_validation->run() == TRUE) {
@@ -101,14 +119,15 @@ class AdminController extends CI_Controller {
         }
     }
 
-    public function addBook() {
+    public function addBook()
+    {
 
         $this->setRules();
 
         if ($this->form_validation->run() == TRUE) {
 
             if ($this->BookModel->insertBook($this->setBookData()) &&
-                    $this->BookCategoryModel->insertBookCategory($this->setCategoryData())) {
+                $this->BookCategoryModel->insertBookCategory($this->setCategoryData())) {
 
                 $this->uploadImage();
                 echo '<script>alert("Book Added");</script>';
@@ -124,35 +143,19 @@ class AdminController extends CI_Controller {
         }
     }
 
-    public function validateCategory($category) {
+    function setRules()
+    {
 
-        if ($this->CategoryModel->findCategory($category)) {
-            $this->form_validation->set_message('validateCategory', 'The Category already exist');
-            return FALSE;
-        } else {
-            return TRUE;
-        }
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('authorSelect', 'Author Name', 'required');
+        $this->form_validation->set_rules('categorySelect', 'Category', 'required');
+        $this->form_validation->set_rules('yearOfPublished', 'Published Year', 'required');
+        $this->form_validation->set_rules('price', 'Price', 'required');
+        $this->form_validation->set_rules('imageName', 'Name', 'required');
     }
 
-    public function validateAuthor($author) {
-
-        if ($this->AuthorModel->findAuthor($author)) {
-            $this->form_validation->set_message('validateAuthor', 'The Author already exist');
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    public function loadDataToAddView() {
-
-        $data['authors'] = $this->AuthorModel->getAllAuthors();
-        $data['categories'] = $this->CategoryModel->getAllCategories();
-
-        return $data;
-    }
-
-    public function setBookData() {
+    public function setBookData()
+    {
 
         $bookData['Title'] = $this->input->post('title');
         $bookData['AuthorId'] = $this->input->post('authorSelect');
@@ -163,14 +166,28 @@ class AdminController extends CI_Controller {
         return $bookData;
     }
 
-    public function setCategoryData() {
+    public function setCategoryData()
+    {
         $catData['Title'] = $this->input->post('title');
         $catData['CatID'] = $this->input->post('categorySelect');
 
         return $catData;
     }
 
-    function createUploadConfig($ImageName) {
+    public function uploadImage()
+    {
+
+        $this->upload->initialize($this->createUploadConfig($this->input->post('imageName')));
+        if (!$this->upload->do_upload('upload')) {
+
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('adminViews\AdminPanelView', $error);
+        }
+    }
+
+    function createUploadConfig($ImageName)
+    {
 
         $config['upload_path'] = './assets/images/';
         $config['allowed_types'] = 'jpg';
@@ -183,39 +200,42 @@ class AdminController extends CI_Controller {
         return $config;
     }
 
-    function setRules() {
+    public function validateCategory($category)
+    {
 
-        $this->form_validation->set_rules('title', 'Title', 'required');
-        $this->form_validation->set_rules('authorSelect', 'Author Name', 'required');
-        $this->form_validation->set_rules('categorySelect', 'Category', 'required');
-        $this->form_validation->set_rules('yearOfPublished', 'Published Year', 'required');
-        $this->form_validation->set_rules('price', 'Price', 'required');
-        $this->form_validation->set_rules('imageName', 'Name', 'required');
-    }
-
-    public function uploadImage() {
-
-        $this->upload->initialize($this->createUploadConfig($this->input->post('imageName')));
-        if (!$this->upload->do_upload('upload')) {
-
-            $error = array('error' => $this->upload->display_errors());
-
-            $this->load->view('adminViews\AdminPanelView', $error);
+        if ($this->CategoryModel->findCategory($category)) {
+            $this->form_validation->set_message('validateCategory', 'The Category already exist');
+            return FALSE;
+        } else {
+            return TRUE;
         }
     }
 
-    public function loadSearchView() {
+    public function validateAuthor($author)
+    {
+
+        if ($this->AuthorModel->findAuthor($author)) {
+            $this->form_validation->set_message('validateAuthor', 'The Author already exist');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function loadSearchView()
+    {
         $this->load->view('adminViews\adminNavViews\searchBookView');
     }
 
-    public function searchBook() {
+    public function searchBook()
+    {
 
         $searchType = $this->setSearchRules();
 
         if ($this->form_validation->run() == TRUE) {
 
             $data['books'] = $this->getBookData($searchType);
-            
+
             $subView = $this->load->view('adminViews\adminNavViews\SearchBookView', $data, TRUE);
             $this->load->view('adminViews\AdminPanelView', array('subView' => $subView));
         } else {
@@ -225,7 +245,8 @@ class AdminController extends CI_Controller {
         }
     }
 
-    function setSearchRules() {
+    function setSearchRules()
+    {
 
         $searchType = 0;
 
@@ -249,7 +270,8 @@ class AdminController extends CI_Controller {
         return $searchType;
     }
 
-    public function getBookData($searchType) {
+    public function getBookData($searchType)
+    {
         switch ($searchType) {
             case 1:
                 return $this->BookModel->searchBook($this->input->post('searchTitle'), $this->input->post('searchAuthor'));
@@ -260,6 +282,13 @@ class AdminController extends CI_Controller {
             default:
                 break;
         }
+    }
+
+    public function loadViewStatistics()
+    {
+        $data['books'] = $this->BookModel->getAdvanceDetails();
+        $this->load->view('adminViews\adminNavViews\AdminBookView', $data);
+
     }
 
 }

@@ -71,20 +71,38 @@ class BookModel extends CI_Model {
 
     function searchRecomendedBooks($uid, $serialKey) {
 
+//        $this->db->select('*');
+//        $this->db->from('books');
+//        $this->db->join('user_book', 'books.SerialKey = user_book.SerialKey');
+//        $this->db->join('user', 'user_book.uid = user.uid');
+//        $where = 'user_book.uid !="'.$uid.'" AND user_book.SerialKey !='.$serialKey;
+//        $this->db->where($where);
+//        $this->db->group_by(array('books.SerialKey','user_book.uid'));
+//
+//        $this->db->order_by('books.Views', 'DESC');
+//        $this->db->limit(5);
+//        $this->db->distinct();
+//        $query =$this->db->get();
+
         $this->db->select('*');
         $this->db->from('books');
         $this->db->join('user_book', 'books.SerialKey = user_book.SerialKey');
         $this->db->join('user', 'user_book.uid = user.uid');
-        $where = 'user_book.uid !="'.$uid.'" AND user_book.SerialKey !='.$serialKey;
-        $this->db->where($where);
-        $this->db->group_by(array('books.SerialKey','user_book.uid'));
-       
-        $this->db->order_by('Views', 'DESC');
+        $this->db->where('user_book.uid !=', $uid);
+        $this->db->where('user_book.SerialKey !=', $serialKey);
+        $this->db->group_by("books.SerialKey");
+        $this->db->order_by('books.Views', 'DESC');
         $this->db->limit(5);
+
         $query =$this->db->get();
-        
         return $query->result();
         
+    }
+
+    public function getAdvanceDetails()
+    {
+        $query = $this->db->get('books');
+        return $query->result();
     }
 
 }

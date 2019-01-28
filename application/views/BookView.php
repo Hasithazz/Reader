@@ -28,7 +28,7 @@
         <div class="col-md-3">
             <img class="img-fluid rounded float-left book image" src="<?php echo base_url('assets/images/' . $book->ImageUrl); ?>" alt="Card image cap">
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" style="margin-top: 8.25rem;">
             <div class="col-md-12 book-card">
                 <div class="card col-md-12">                    
                     <div class="card-body">
@@ -36,7 +36,7 @@
 
                         <div class="allbooks author">
                             <p class="card-text"> Author : <?php echo $book->AuthorName; ?></p>
-                            <p class="card-text"> Author : <?php echo $book->Type; ?></p>
+                            <p class="card-text"> Category : <?php echo $book->Type; ?></p>
                         </div>                       
                         <p class="card-text"> Year of published :  <?php echo $book->YearOfPublished; ?> </p>
                         <p class="card-text">Price : $<?php echo $book->Price; ?></p>

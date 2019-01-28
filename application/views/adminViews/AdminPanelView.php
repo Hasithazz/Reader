@@ -9,6 +9,11 @@
             $('#admin_panel').load('loadSearchView');
         });        
     });
+    $(document).ready(function () {
+        $('#statistics').click(function () {//element to be click to load the page in the div
+            $('#admin_panel').load('loadViewStatistics');
+        });
+    });
 </script>
 <div class="row col-md-12">
     <div class="col-md-2 admin_navbar">
@@ -20,7 +25,7 @@
                 <a class="nav-link admin_link" id="search" href="#"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;Search</a>
             </li>
             <li class="nav-item admin nav_item">
-                <a class="nav-link admin_link" href="#"><i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp; View Statistics</a>
+                <a class="nav-link admin_link" id="statistics" href="#"><i class="fa fa-line-chart" aria-hidden="true"></i>&nbsp; View Statistics</a>
             </li>        
         </ul>
 

@@ -44,25 +44,25 @@
             <br>
             <h1>All Books</h1>
             <br>
-            <div class="row" style="margin: auto;margin-left: 40px;">
+            <div class="col-md-12 row" style="margin: auto;margin-left: 40px;">
                 <?php
                 foreach ($allBooks as $key) {
                     echo
                     //'<div style="padding-bottom: 15px;" class="col-md-3">
-                    '<div style="padding-bottom: 15px; padding-right: 25px;" class="card-deck">
-                    <div style="max-height: 575px; min-height: 575px;" class="card">
+                    '<div style="padding-bottom: 15px; padding-right: 25px;" class="card-deck col-md-3">
+                    <div style="max-height: 575px; min-height: 575px;" class="card border-primary">
                     <img class="allBooks img" src="' . base_url() . 'assets/images/' . $key->ImageUrl . '" alt="' . base_url() . 'assets/images/wonder.jpg">
                         <div class="card-body">
                             <div class="allbooks title">
-                               <h6class="card-title ">' . $key->Title . '</h5>
+                               <h6class="card-title ">'. $key->Title . '</h5>
                             </div>
                             <div class="allbooks author">
                                 <p class="card-text"> Author : ' . $key->AuthorName . '</p>
                             </div>                       
                             <p class="card-text"> Year of published : ' . $key->YearOfPublished . '</p>
-                            <p class="card-text">Price : $' . $key->Price . '</p>
+                            <p class="card-text"><strong>Price : $' . $key->Price . '</strong></p>
                             <a href="' . site_url('BookController/viewBook/' .
-                            urldecode($key->SerialKey)) . '" class="btn btn-primary">View</a>
+                            urldecode($key->SerialKey)) . '" class="btn btn-primary btn-block">View</a>
                         </div>
                     </div>
                 </div>';
